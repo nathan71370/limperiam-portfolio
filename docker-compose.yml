@@ -1,0 +1,15 @@
+services:
+  api:
+    build: ./api
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=sqlite:////data/sqlite.db
+      - JWT_SECRET=${JWT_SECRET:-dev-secret-change-me-min-32-chars}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
+      - DEBUG=${DEBUG:-false}
+      - UPLOAD_DIR=/data/uploads
+    volumes:
+      - ./data:/data
+    ports:
+      - "127.0.0.1:8000:8000"
