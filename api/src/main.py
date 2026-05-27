@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.config import get_settings
-from src.routers import projects
+from src.routers import experiences, projects
 
 settings = get_settings()
 
@@ -23,6 +23,7 @@ if settings.debug:
     )
 
 app.include_router(projects.router, prefix=settings.api_v1_prefix)
+app.include_router(experiences.router, prefix=settings.api_v1_prefix)
 
 
 @app.get(f"{settings.api_v1_prefix}/health")
