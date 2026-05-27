@@ -1,13 +1,15 @@
 import json
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from src.config import get_settings
 from src.database import get_db
 from src.deps import get_current_admin
 from src.schemas.project import ProjectCreate, ProjectOut, ProjectUpdate
 from src.services import project_service
+from src.services.upload_service import is_valid_image, save_upload
 
 router = APIRouter(
     prefix="/admin/projects",
@@ -75,3 +77,33 @@ def delete(project_id: int, db: Session = Depends(get_db)) -> None:
     if project is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
     project_service.delete_project(db, project)
+
+
+@router.post("/{project_id}/image", response_model=ProjectOut)
+async def upload_image(
+    project_id: int,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+) -> dict:
+    settings = get_settings()
+    max_size_bytes = settings.upload_max_size_mb * 1024 * 1024
+
+    project = project_service.get_project_by_id(db, project_id)
+    if project is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+
+    content = await file.read()
+    if len(content) > max_size_bytes:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail=f"File too large (max {settings.upload_max_size_mb} MB)",
+        )
+    if not is_valid_image(content, file.filename or ""):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid image format",
+        )
+
+    public_path = save_upload(content, file.filename or "image", settings.upload_dir)
+    updated = project_service.update_project(db, project, {"image_url": public_path})
+    return _to_out(updated)

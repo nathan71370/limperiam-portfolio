@@ -52,3 +52,16 @@ def reset_rate_limiter():
     from src.rate_limit import limiter
     limiter.reset()
     yield
+
+
+@pytest.fixture(autouse=True)
+def isolated_upload_dir(tmp_path, monkeypatch):
+    """Each test uses its own upload directory."""
+    upload_dir = tmp_path / "uploads"
+    upload_dir.mkdir(exist_ok=True)
+    monkeypatch.setenv("UPLOAD_DIR", str(upload_dir))
+    # Bust the @lru_cache so the new env value is picked up
+    from src.config import get_settings
+    get_settings.cache_clear()
+    yield upload_dir
+    get_settings.cache_clear()

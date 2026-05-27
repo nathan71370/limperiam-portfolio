@@ -1,6 +1,9 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 
@@ -47,6 +50,9 @@ app.include_router(admin_projects.router, prefix=settings.api_v1_prefix)
 app.include_router(admin_experiences.router, prefix=settings.api_v1_prefix)
 app.include_router(admin_skills.router, prefix=settings.api_v1_prefix)
 app.include_router(admin_messages.router, prefix=settings.api_v1_prefix)
+
+os.makedirs(settings.upload_dir, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=settings.upload_dir), name="uploads")
 
 
 @app.get(f"{settings.api_v1_prefix}/health")
