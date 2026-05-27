@@ -57,3 +57,15 @@ def test_post_contact_invalid_email_returns_422(client: TestClient) -> None:
 def test_post_contact_message_too_short_returns_422(client: TestClient) -> None:
     response = client.post("/api/v1/contact", json=_valid_payload(message="short"))
     assert response.status_code == 422
+
+
+def test_post_contact_rate_limited_after_5_requests(
+    client: TestClient, db_session: Session
+) -> None:
+    # Exhaust the 5/minute limit
+    for i in range(5):
+        response = client.post("/api/v1/contact", json=_valid_payload(email=f"u{i}@example.com"))
+        assert response.status_code == 201
+
+    response = client.post("/api/v1/contact", json=_valid_payload(email="6th@example.com"))
+    assert response.status_code == 429

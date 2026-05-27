@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Request, status
 from sqlalchemy.orm import Session
 
 from src.database import get_db
+from src.rate_limit import limiter
 from src.schemas.contact import ContactCreate
 from src.services import contact_service
 
@@ -9,13 +10,13 @@ router = APIRouter(prefix="/contact", tags=["contact"])
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
+@limiter.limit("5/minute")
 def post_contact(
-    payload: ContactCreate,
     request: Request,
+    payload: ContactCreate,
     db: Session = Depends(get_db),
 ) -> dict[str, str]:
     if contact_service.is_bot_submission(payload.website, payload.elapsed_ms):
-        # Silently drop — don't tell bots they were detected
         return {"status": "ok"}
 
     ip = request.client.host if request.client else None

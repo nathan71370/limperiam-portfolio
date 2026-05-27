@@ -44,3 +44,11 @@ def client(db_session: Session) -> Generator[TestClient, None, None]:
     with TestClient(app) as c:
         yield c
     app.dependency_overrides.clear()
+
+
+@pytest.fixture(autouse=True)
+def reset_rate_limiter():
+    """Reset slowapi limiter state before each test."""
+    from src.rate_limit import limiter
+    limiter.reset()
+    yield
