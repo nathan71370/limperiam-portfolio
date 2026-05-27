@@ -1,3 +1,3 @@
-from src.routers import contact, experiences, projects, skills
+from src.routers import auth, contact, experiences, projects, skills
 
-__all__ = ["contact", "experiences", "projects", "skills"]
+__all__ = ["auth", "contact", "experiences", "projects", "skills"]
