@@ -23,9 +23,7 @@ def login(
 ) -> dict[str, str]:
     user = db.query(AdminUser).filter(AdminUser.email == payload.email).first()
     if user is None or not verify_password(payload.password, user.password_hash):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
-        )
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
 
     token = create_access_token({"sub": str(user.id), "email": user.email})
     response.set_cookie(

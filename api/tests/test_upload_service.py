@@ -1,6 +1,5 @@
 from src.services.upload_service import is_valid_image, save_upload
 
-
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n" + b"\x00" * 50
 JPEG_MAGIC = b"\xff\xd8\xff" + b"\x00" * 50
 WEBP_MAGIC = b"RIFF\x00\x00\x00\x00WEBP" + b"\x00" * 50

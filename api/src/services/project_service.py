@@ -17,9 +17,7 @@ def list_all_projects(db: Session) -> list[Project]:
     return db.query(Project).order_by(asc(Project.display_order), asc(Project.id)).all()
 
 
-def get_project_by_slug(
-    db: Session, slug: str, published_only: bool = True
-) -> Project | None:
+def get_project_by_slug(db: Session, slug: str, published_only: bool = True) -> Project | None:
     query = db.query(Project).filter(Project.slug == slug)
     if published_only:
         query = query.filter(Project.is_published.is_(True))

@@ -9,7 +9,17 @@ from slowapi.middleware import SlowAPIMiddleware
 
 from src.config import get_settings
 from src.rate_limit import limiter
-from src.routers import admin_experiences, admin_messages, admin_projects, admin_skills, auth, contact, experiences, projects, skills
+from src.routers import (
+    admin_experiences,
+    admin_messages,
+    admin_projects,
+    admin_skills,
+    auth,
+    contact,
+    experiences,
+    projects,
+    skills,
+)
 
 settings = get_settings()
 

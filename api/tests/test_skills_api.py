@@ -4,9 +4,7 @@ from sqlalchemy.orm import Session
 from src.models.skill import Skill
 
 
-def test_list_skills_returns_all_sorted(
-    client: TestClient, db_session: Session
-) -> None:
+def test_list_skills_returns_all_sorted(client: TestClient, db_session: Session) -> None:
     db_session.add(Skill(name="React", category="frontend", display_order=2))
     db_session.add(Skill(name="Python", category="backend", display_order=1))
     db_session.add(Skill(name="Docker", category="devops", display_order=3))

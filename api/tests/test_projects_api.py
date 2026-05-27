@@ -22,9 +22,7 @@ def _create_project(db: Session, **kwargs) -> Project:
     return project
 
 
-def test_list_projects_returns_published_only(
-    client: TestClient, db_session: Session
-) -> None:
+def test_list_projects_returns_published_only(client: TestClient, db_session: Session) -> None:
     _create_project(db_session, slug="pub", is_published=True)
     _create_project(db_session, slug="draft", is_published=False)
 
@@ -35,9 +33,7 @@ def test_list_projects_returns_published_only(
     assert data[0]["slug"] == "pub"
 
 
-def test_list_projects_parses_tech_stack_as_list(
-    client: TestClient, db_session: Session
-) -> None:
+def test_list_projects_parses_tech_stack_as_list(client: TestClient, db_session: Session) -> None:
     _create_project(
         db_session,
         slug="parsed",
@@ -50,9 +46,7 @@ def test_list_projects_parses_tech_stack_as_list(
     assert response.json()[0]["tech_stack"] == ["React", "Python"]
 
 
-def test_get_project_by_slug_returns_project(
-    client: TestClient, db_session: Session
-) -> None:
+def test_get_project_by_slug_returns_project(client: TestClient, db_session: Session) -> None:
     _create_project(db_session, slug="my-project", title="My Project", is_published=True)
 
     response = client.get("/api/v1/projects/my-project")
@@ -60,9 +54,7 @@ def test_get_project_by_slug_returns_project(
     assert response.json()["title"] == "My Project"
 
 
-def test_get_project_unpublished_returns_404(
-    client: TestClient, db_session: Session
-) -> None:
+def test_get_project_unpublished_returns_404(client: TestClient, db_session: Session) -> None:
     _create_project(db_session, slug="draft", is_published=False)
 
     response = client.get("/api/v1/projects/draft")

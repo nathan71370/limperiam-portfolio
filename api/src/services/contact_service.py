@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 
 from src.models.contact_message import ContactMessage
 
-
 MIN_ELAPSED_MS = 2000
 
 

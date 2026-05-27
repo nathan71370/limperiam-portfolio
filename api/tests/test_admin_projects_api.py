@@ -24,8 +24,12 @@ def test_list_admin_projects_with_auth_returns_all_including_drafts(
     client: TestClient, db_session: Session
 ) -> None:
     token = _login(client, db_session)
-    db_session.add(Project(slug="pub", title="P", description="d", tech_stack="[]", is_published=True))
-    db_session.add(Project(slug="draft", title="D", description="d", tech_stack="[]", is_published=False))
+    db_session.add(
+        Project(slug="pub", title="P", description="d", tech_stack="[]", is_published=True)
+    )
+    db_session.add(
+        Project(slug="draft", title="D", description="d", tech_stack="[]", is_published=False)
+    )
     db_session.commit()
 
     response = client.get("/api/v1/admin/projects", cookies={COOKIE_NAME: token})
@@ -49,9 +53,7 @@ def test_create_project(client: TestClient, db_session: Session) -> None:
     assert data["tech_stack"] == ["Python", "FastAPI"]
 
 
-def test_create_project_duplicate_slug_returns_409(
-    client: TestClient, db_session: Session
-) -> None:
+def test_create_project_duplicate_slug_returns_409(client: TestClient, db_session: Session) -> None:
     token = _login(client, db_session)
     db_session.add(Project(slug="dup", title="A", description="d", tech_stack="[]"))
     db_session.commit()
@@ -78,7 +80,9 @@ def test_update_project(client: TestClient, db_session: Session) -> None:
 
 def test_update_project_not_found_returns_404(client: TestClient, db_session: Session) -> None:
     token = _login(client, db_session)
-    response = client.put("/api/v1/admin/projects/999", json={"title": "X"}, cookies={COOKIE_NAME: token})
+    response = client.put(
+        "/api/v1/admin/projects/999", json={"title": "X"}, cookies={COOKIE_NAME: token}
+    )
     assert response.status_code == 404
 
 

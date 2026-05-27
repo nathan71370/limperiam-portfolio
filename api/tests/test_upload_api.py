@@ -21,9 +21,7 @@ def _login_and_project(client: TestClient, db: Session) -> tuple[str, int]:
     return token, p.id
 
 
-def test_upload_valid_image(
-    client: TestClient, db_session: Session, isolated_upload_dir
-) -> None:
+def test_upload_valid_image(client: TestClient, db_session: Session, isolated_upload_dir) -> None:
     token, pid = _login_and_project(client, db_session)
     response = client.post(
         f"/api/v1/admin/projects/{pid}/image",

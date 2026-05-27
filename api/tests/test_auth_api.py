@@ -6,7 +6,9 @@ from src.deps import COOKIE_NAME
 from src.models.admin_user import AdminUser
 
 
-def _create_admin(db: Session, email: str = "admin@test.com", password: str = "secret123") -> AdminUser:
+def _create_admin(
+    db: Session, email: str = "admin@test.com", password: str = "secret123"
+) -> AdminUser:
     user = AdminUser(email=email, password_hash=hash_password(password))
     db.add(user)
     db.commit()
@@ -14,9 +16,7 @@ def _create_admin(db: Session, email: str = "admin@test.com", password: str = "s
     return user
 
 
-def test_login_with_valid_credentials_sets_cookie(
-    client: TestClient, db_session: Session
-) -> None:
+def test_login_with_valid_credentials_sets_cookie(client: TestClient, db_session: Session) -> None:
     _create_admin(db_session)
 
     response = client.post(
@@ -27,9 +27,7 @@ def test_login_with_valid_credentials_sets_cookie(
     assert COOKIE_NAME in response.cookies
 
 
-def test_login_wrong_password_returns_401(
-    client: TestClient, db_session: Session
-) -> None:
+def test_login_wrong_password_returns_401(client: TestClient, db_session: Session) -> None:
     _create_admin(db_session)
 
     response = client.post(
@@ -52,9 +50,7 @@ def test_me_without_cookie_returns_401(client: TestClient) -> None:
     assert response.status_code == 401
 
 
-def test_me_with_valid_cookie_returns_user(
-    client: TestClient, db_session: Session
-) -> None:
+def test_me_with_valid_cookie_returns_user(client: TestClient, db_session: Session) -> None:
     _create_admin(db_session)
     login = client.post(
         "/api/v1/auth/login",

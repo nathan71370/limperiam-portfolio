@@ -31,9 +31,7 @@ def test_create_skill(client: TestClient, db_session: Session) -> None:
     assert response.json()["name"] == "Python"
 
 
-def test_create_skill_invalid_category_returns_422(
-    client: TestClient, db_session: Session
-) -> None:
+def test_create_skill_invalid_category_returns_422(client: TestClient, db_session: Session) -> None:
     token = _login(client, db_session)
     response = client.post(
         "/api/v1/admin/skills",

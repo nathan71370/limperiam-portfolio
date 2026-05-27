@@ -54,9 +54,7 @@ def create(payload: ProjectCreate, db: Session = Depends(get_db)) -> dict:
 
 
 @router.put("/{project_id}", response_model=ProjectOut)
-def update(
-    project_id: int, payload: ProjectUpdate, db: Session = Depends(get_db)
-) -> dict:
+def update(project_id: int, payload: ProjectUpdate, db: Session = Depends(get_db)) -> dict:
     project = project_service.get_project_by_id(db, project_id)
     if project is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
