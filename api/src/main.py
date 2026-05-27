@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.config import get_settings
+from src.routers import projects
 
 settings = get_settings()
 
@@ -20,6 +21,8 @@ if settings.debug:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+app.include_router(projects.router, prefix=settings.api_v1_prefix)
 
 
 @app.get(f"{settings.api_v1_prefix}/health")
