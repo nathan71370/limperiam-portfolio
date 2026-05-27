@@ -6,7 +6,7 @@ from slowapi.middleware import SlowAPIMiddleware
 
 from src.config import get_settings
 from src.rate_limit import limiter
-from src.routers import admin_experiences, admin_projects, admin_skills, auth, contact, experiences, projects, skills
+from src.routers import admin_experiences, admin_messages, admin_projects, admin_skills, auth, contact, experiences, projects, skills
 
 settings = get_settings()
 
@@ -46,6 +46,7 @@ app.include_router(auth.router, prefix=settings.api_v1_prefix)
 app.include_router(admin_projects.router, prefix=settings.api_v1_prefix)
 app.include_router(admin_experiences.router, prefix=settings.api_v1_prefix)
 app.include_router(admin_skills.router, prefix=settings.api_v1_prefix)
+app.include_router(admin_messages.router, prefix=settings.api_v1_prefix)
 
 
 @app.get(f"{settings.api_v1_prefix}/health")
