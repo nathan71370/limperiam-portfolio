@@ -3,6 +3,8 @@ import { Reveal } from "@/components/reveal";
 import { Kicker } from "@/components/kicker";
 import { ContactForm } from "@/components/contact-form";
 
+const CALCOM_LINK = process.env.NEXT_PUBLIC_CALCOM_LINK;
+
 export function Contact() {
   return (
     <section
@@ -65,6 +67,24 @@ export function Contact() {
               ))}
             </ul>
           </div>
+          {CALCOM_LINK && (
+            <div>
+              <span className="text-[12px] uppercase tracking-[1.5px] text-ink-mute">
+                Rendez-vous
+              </span>
+              <a
+                href={`https://cal.com/${CALCOM_LINK}`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 inline-flex items-center gap-2 rounded-full bg-ink text-cream px-5 py-2.5 text-[13px] font-medium hover:bg-accent-deep transition-colors"
+              >
+                Réserver un créneau →
+              </a>
+              <p className="mt-2 text-[11px] text-ink-mute">
+                Via Cal.com — choix d&apos;un créneau de 30 min
+              </p>
+            </div>
+          )}
         </Reveal>
       </div>
     </section>

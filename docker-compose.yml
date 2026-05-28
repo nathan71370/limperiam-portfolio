@@ -22,6 +22,7 @@ services:
     environment:
       - API_URL=http://api:8000
       - NODE_ENV=production
+      - NEXT_PUBLIC_CALCOM_LINK=${NEXT_PUBLIC_CALCOM_LINK:-}
     depends_on:
       - api
     ports:
