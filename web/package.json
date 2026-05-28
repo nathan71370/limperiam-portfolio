@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "gen:api": "openapi-typescript http://localhost:8000/api/v1/openapi.json -o src/lib/api-types.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",
