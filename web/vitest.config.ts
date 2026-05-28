@@ -7,6 +7,10 @@ export default defineConfig({
     include: ["tests/unit/**/*.test.ts"],
   },
   resolve: {
-    alias: { "@": path.resolve(__dirname, "src") },
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+      // server-only throws in non-Next.js environments; stub it for unit tests
+      "server-only": path.resolve(__dirname, "tests/__mocks__/server-only.ts"),
+    },
   },
 });
