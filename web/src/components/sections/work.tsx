@@ -99,7 +99,9 @@ export async function Work() {
       </Reveal>
 
       <Reveal delay={160} className="mt-6 max-w-3xl">
-        <p className="text-[16px] text-ink-soft leading-[1.6]">{WORK_INTRO.sub}</p>
+        <p className="text-[16px] text-ink-soft leading-[1.6]">
+          {WORK_INTRO.sub}
+        </p>
       </Reveal>
 
       <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -108,7 +110,9 @@ export async function Work() {
             Aucun projet publié pour le moment.
           </p>
         ) : (
-          projects.map((p, i) => <ProjectCard key={p.id} project={p} index={i} />)
+          projects.map((p, i) => (
+            <ProjectCard key={p.id} project={p} index={i} />
+          ))
         )}
       </div>
     </section>

@@ -27,7 +27,9 @@ export function About() {
         </Reveal>
 
         <Reveal delay={160} className="mt-6 max-w-3xl">
-          <p className="text-[16px] text-ink-soft leading-[1.6]">{ABOUT.lede}</p>
+          <p className="text-[16px] text-ink-soft leading-[1.6]">
+            {ABOUT.lede}
+          </p>
         </Reveal>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">

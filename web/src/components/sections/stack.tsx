@@ -60,7 +60,9 @@ export async function Stack() {
         </Reveal>
 
         <Reveal delay={160} className="mt-6 max-w-3xl">
-          <p className="text-[16px] text-ink-soft leading-[1.6]">{STACK_INTRO.sub}</p>
+          <p className="text-[16px] text-ink-soft leading-[1.6]">
+            {STACK_INTRO.sub}
+          </p>
         </Reveal>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -72,7 +74,9 @@ export async function Stack() {
             groups.map((group, i) => (
               <Reveal key={group.category} delay={i * 60}>
                 <div className="rounded-2xl bg-card border border-line p-6 shadow-card h-full">
-                  <h3 className="font-serif text-[20px] text-ink">{group.label}</h3>
+                  <h3 className="font-serif text-[20px] text-ink">
+                    {group.label}
+                  </h3>
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {group.items.map((s) => (
                       <li

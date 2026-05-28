@@ -13,7 +13,11 @@ export function Nav() {
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-[13px] text-ink-soft">
           {NAV.items.map((item) => (
-            <a key={item.h} href={item.h} className="hover:text-ink transition-colors">
+            <a
+              key={item.h}
+              href={item.h}
+              className="hover:text-ink transition-colors"
+            >
               {item.l}
             </a>
           ))}

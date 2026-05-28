@@ -18,7 +18,9 @@ export async function fetchProjects(): Promise<Project[]> {
   }
 }
 
-export async function fetchProjectBySlug(slug: string): Promise<Project | null> {
+export async function fetchProjectBySlug(
+  slug: string,
+): Promise<Project | null> {
   try {
     return await apiGet<Project>(`/projects/${slug}`, {
       next: { revalidate: REVALIDATE_SECONDS, tags: [`project:${slug}`] },
