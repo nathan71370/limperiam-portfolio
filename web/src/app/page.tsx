@@ -1,4 +1,7 @@
-import { Nav } from "@/components/nav";
+import { TopBar } from "@/components/topbar";
+import { CustomCursor } from "@/components/custom-cursor";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { MagneticHandler } from "@/components/magnetic";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
 import { Work } from "@/components/sections/work";
@@ -10,7 +13,10 @@ import { Footer } from "@/components/sections/footer";
 export default function HomePage() {
   return (
     <>
-      <Nav />
+      <ScrollProgress />
+      <CustomCursor />
+      <MagneticHandler />
+      <TopBar />
       <main>
         <Hero />
         <About />

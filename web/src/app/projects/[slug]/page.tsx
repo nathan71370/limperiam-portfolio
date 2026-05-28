@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { marked } from "marked";
 import { fetchProjectBySlug } from "@/lib/server-fetch";
-import { Nav } from "@/components/nav";
+import { TopBar } from "@/components/topbar";
 import { Footer } from "@/components/sections/footer";
 
 export const revalidate = 60;
@@ -33,7 +33,7 @@ export default async function ProjectPage({ params }: Params) {
 
   return (
     <>
-      <Nav />
+      <TopBar />
       <main className="mx-auto max-w-[var(--max-w)] px-[var(--page-pad)] py-16 md:py-24">
         <Link
           href="/#work"

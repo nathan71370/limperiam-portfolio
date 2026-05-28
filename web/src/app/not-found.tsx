@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Nav } from "@/components/nav";
+import { TopBar } from "@/components/topbar";
 import { Footer } from "@/components/sections/footer";
 
 export default function NotFound() {
   return (
     <>
-      <Nav />
+      <TopBar />
       <main className="mx-auto max-w-[var(--max-w)] px-[var(--page-pad)] py-32 text-center">
         <p className="font-serif text-accent text-[14px] tracking-[2px] uppercase">
           404
