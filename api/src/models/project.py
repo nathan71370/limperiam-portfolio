@@ -12,6 +12,9 @@ class Project(Base, TimestampMixin):
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
     content: Mapped[str | None] = mapped_column(Text, nullable=True)
+    title_en: Mapped[str | None] = mapped_column(Text, nullable=True)
+    description_en: Mapped[str | None] = mapped_column(Text, nullable=True)
+    content_en: Mapped[str | None] = mapped_column(Text, nullable=True)
     tech_stack: Mapped[str] = mapped_column(Text, nullable=False, default="[]")  # JSON
     image_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
     repo_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
