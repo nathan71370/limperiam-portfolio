@@ -15,6 +15,7 @@ Personal portfolio site by Nathan Mercier — fullstack rebuild.
 - ✅ **Plan 2: Frontend public site** (`v0.2.0-web`) — design fidelity, contact form
 - ✅ **Plan 3: Admin UI** (`v0.3.0-admin`) — full CMS, image upload, Cal.com link
 - ✅ **Plan 4: Visual fidelity rebuild** (`v0.4.0-fidelity`) — verbatim port of original CSS + components, FR/EN, dark mode, cursor, scroll progress, marquee
+- ✅ **Plan 5: Bilingual DB schema** (`v0.5.0-bilingual`) — Project/Experience `_en` columns, admin forms with FR+EN inputs side-by-side, seeded bilingual content
 
 ## Running the full stack
 
