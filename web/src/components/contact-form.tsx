@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { submitContact, type ContactState } from "@/app/actions/contact";
 
 const INITIAL: ContactState = { status: "idle" };
@@ -8,7 +8,7 @@ const INITIAL: ContactState = { status: "idle" };
 export function ContactForm() {
   const [state, formAction, pending] = useActionState(submitContact, INITIAL);
   const mountedAt = useRef<number>(0);
-  const [elapsedField, setElapsedField] = useState(0);
+  const elapsedInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
@@ -21,13 +21,22 @@ export function ContactForm() {
     }
   }, [state.status]);
 
+  const handleSubmit = () => {
+    // Set the hidden input's value synchronously *before* the form action reads FormData.
+    // Using React state here would race: setState is async and the FormData snapshot
+    // would still contain the previous (initial) value.
+    if (elapsedInputRef.current) {
+      elapsedInputRef.current.value = String(
+        Math.round(performance.now() - mountedAt.current),
+      );
+    }
+  };
+
   return (
     <form
       ref={formRef}
       action={formAction}
-      onSubmit={() =>
-        setElapsedField(Math.round(performance.now() - mountedAt.current))
-      }
+      onSubmit={handleSubmit}
       className="grid grid-cols-1 md:grid-cols-2 gap-4"
       noValidate
     >
@@ -114,7 +123,12 @@ export function ContactForm() {
         </label>
       </div>
 
-      <input type="hidden" name="elapsed_ms" value={elapsedField} />
+      <input
+        ref={elapsedInputRef}
+        type="hidden"
+        name="elapsed_ms"
+        defaultValue={0}
+      />
 
       <div className="md:col-span-2 flex items-center gap-4">
         <button
