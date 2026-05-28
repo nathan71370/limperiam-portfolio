@@ -8,6 +8,9 @@ class ProjectBase(BaseModel):
     title: str = Field(min_length=1, max_length=200)
     description: str = Field(min_length=1)
     content: str | None = None
+    title_en: str | None = Field(default=None, max_length=200)
+    description_en: str | None = None
+    content_en: str | None = None
     tech_stack: list[str] = Field(default_factory=list)
     image_url: str | None = None
     repo_url: str | None = None
@@ -25,6 +28,9 @@ class ProjectUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=200)
     description: str | None = None
     content: str | None = None
+    title_en: str | None = Field(default=None, max_length=200)
+    description_en: str | None = None
+    content_en: str | None = None
     tech_stack: list[str] | None = None
     image_url: str | None = None
     repo_url: str | None = None
