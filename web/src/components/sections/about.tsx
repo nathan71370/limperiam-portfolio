@@ -1,54 +1,46 @@
-import { ABOUT } from "@/content/static";
+"use client";
+
+import { useLangTheme } from "@/components/lang-theme-provider";
+import { getDict } from "@/content/i18n";
 import { Reveal } from "@/components/reveal";
-import { Kicker } from "@/components/kicker";
+import { WordReveal } from "@/components/word-reveal";
 
 export function About() {
+  const { lang } = useLangTheme();
+  const t = getDict(lang);
+  const a = t.about;
+
   return (
-    <section
-      id="about"
-      className="bg-stage-2 border-y border-line py-24 md:py-32"
-    >
-      <div className="mx-auto max-w-[var(--max-w)] px-[var(--page-pad)]">
-        <Reveal>
-          <Kicker>{ABOUT.kicker}</Kicker>
-        </Reveal>
-
-        <Reveal delay={80} className="mt-4 max-w-3xl">
-          <h2
-            className="font-serif text-ink leading-[1.1] tracking-[-0.01em]"
-            style={{ fontSize: "clamp(32px, 5vw, 56px)" }}
-          >
-            {ABOUT.headlinePre}
-            <em className="text-accent not-italic font-serif italic">
-              {ABOUT.headlineEm}
-            </em>
-            {ABOUT.headlinePost}
-          </h2>
-        </Reveal>
-
-        <Reveal delay={160} className="mt-6 max-w-3xl">
-          <p className="text-[16px] text-ink-soft leading-[1.6]">
-            {ABOUT.lede}
-          </p>
-        </Reveal>
-
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-          {ABOUT.pillars.map((pillar, i) => (
-            <Reveal key={pillar.k} delay={i * 80}>
-              <article className="rounded-2xl bg-card border border-line p-8 shadow-card h-full">
-                <span className="font-serif text-accent text-[14px] tracking-[2px]">
-                  {pillar.k}
-                </span>
-                <h3 className="mt-4 font-serif text-[26px] leading-[1.2] text-ink">
-                  {pillar.tPre}
-                  <em className="text-accent not-italic font-serif italic">
-                    {pillar.tEm}
-                  </em>
-                </h3>
-                <p className="mt-4 text-[14px] text-ink-soft leading-[1.6]">
-                  {pillar.d}
-                </p>
-              </article>
+    <section className="section" id="approach">
+      <div className="shell">
+        <div className="about-head">
+          <div>
+            <Reveal>
+              <span className="kicker">{a.kicker}</span>
+            </Reveal>
+            <h2 className="h2">
+              <WordReveal text={a.headline_pre} />
+              <span className="it">
+                <WordReveal text={a.headline_em} baseDelay={2} />
+              </span>
+              <WordReveal text={a.headline_post} baseDelay={4} />
+            </h2>
+          </div>
+          <Reveal delay={200}>
+            <p className="lede" style={{ margin: 0 }}>
+              {a.lede}
+            </p>
+          </Reveal>
+        </div>
+        <div className="pillars">
+          {a.pillars.map((p, i) => (
+            <Reveal key={p.k} delay={i * 120} className="pillar">
+              <div className="num">{p.k}</div>
+              <div className="ttl">
+                {p.t_pre}
+                <span className="it">{p.t_em}</span>
+              </div>
+              <div className="desc">{p.d}</div>
             </Reveal>
           ))}
         </div>
