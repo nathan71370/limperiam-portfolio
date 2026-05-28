@@ -67,8 +67,7 @@ export async function createProjectAction(
     const project = await apiAdminPost<Project>("/admin/projects", parsed.data);
     revalidateTag("projects", {});
     revalidatePath("/admin/projects");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    redirect(`/admin/projects/${project.id}` as any);
+    redirect(`/admin/projects/${project.id}`);
   } catch (err) {
     if (err instanceof ApiError && err.status === 409) {
       return { status: "error", error: "Ce slug existe déjà." };
