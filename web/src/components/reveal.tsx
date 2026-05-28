@@ -5,6 +5,11 @@ import { useEffect, useRef, useState } from "react";
 function useReveal(opts: IntersectionObserverInit = {}) {
   const ref = useRef<HTMLElement | null>(null);
   const [seen, setSeen] = useState(false);
+  // Keep `opts` stable across renders — if the caller passes a new object literal
+  // each render, we'd otherwise re-create the IntersectionObserver constantly and
+  // never give it time to fire. We capture the FIRST opts and ignore subsequent
+  // changes (which is fine: thresholds don't change at runtime for our usage).
+  const optsRef = useRef(opts);
 
   // Check if element is already visible on mount (before IO fires)
   useEffect(() => {
@@ -23,7 +28,6 @@ function useReveal(opts: IntersectionObserverInit = {}) {
         setSeen(true);
       }
     };
-    // Defer so setState is not synchronous in the effect body
     const id = requestAnimationFrame(checkNow);
     return () => cancelAnimationFrame(id);
   }, []);
@@ -40,11 +44,11 @@ function useReveal(opts: IntersectionObserverInit = {}) {
           }
         });
       },
-      { threshold: 0.05, ...opts },
+      { threshold: 0.05, ...optsRef.current },
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [seen, opts]);
+  }, [seen]);
 
   return [ref, seen] as const;
 }

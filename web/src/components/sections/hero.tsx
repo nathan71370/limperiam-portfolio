@@ -17,7 +17,7 @@ export function Hero() {
         <span className="pip" />
         {hero.meta_left} · {hero.meta_right}
       </Reveal>
-      <h1 className="hero-title">
+      <h1 className="display">
         <WordReveal text={hero.headline_pre} />
         <span className="it">
           <WordReveal text={hero.headline_em} baseDelay={3} />
