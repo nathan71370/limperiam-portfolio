@@ -20,7 +20,11 @@ export const WORK_META: Record<string, WorkMeta> = {
     client: "Crédit Agricole T&S",
     role: "Java Developer · Freelance",
     stats: [
-      { v: "100%", l_fr: "remboursements automatisés", l_en: "automated refunds" },
+      {
+        v: "100%",
+        l_fr: "remboursements automatisés",
+        l_en: "automated refunds",
+      },
       { v: "30+", l_fr: "règles métier", l_en: "business rules" },
       { v: "2 ans", l_fr: "en mission", l_en: "yrs on mission" },
     ],

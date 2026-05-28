@@ -52,6 +52,7 @@ export function LangThemeProvider({
 
 export function useLangTheme(): Ctx {
   const ctx = useContext(LangThemeContext);
-  if (!ctx) throw new Error("useLangTheme must be used inside LangThemeProvider");
+  if (!ctx)
+    throw new Error("useLangTheme must be used inside LangThemeProvider");
   return ctx;
 }

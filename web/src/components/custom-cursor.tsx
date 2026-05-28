@@ -34,8 +34,9 @@ export function CustomCursor() {
 
     const onOver = (e: MouseEvent) => {
       const target = e.target as Element | null;
-      const interactive =
-        target?.closest?.('a, button, [data-magnetic], [data-cursor="hover"]');
+      const interactive = target?.closest?.(
+        'a, button, [data-magnetic], [data-cursor="hover"]',
+      );
       if (ring.current) {
         ring.current.classList.toggle("is-hover", !!interactive);
       }

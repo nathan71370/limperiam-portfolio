@@ -1,6 +1,8 @@
 import Link from "next/link";
 
-const ITEMS = [
+import type { Route } from "next";
+
+const ITEMS: { label: string; href: Route }[] = [
   { label: "Dashboard", href: "/admin" },
   { label: "Projets", href: "/admin/projects" },
   { label: "Expériences", href: "/admin/experiences" },
@@ -22,10 +24,10 @@ export function Sidebar() {
       </p>
       <nav className="mt-8 flex flex-col gap-1">
         {ITEMS.map((item) => (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           <Link
             key={item.href}
-            href={item.href as any}
+            href={item.href}
             className="rounded-lg px-3 py-2 text-[14px] text-ink-soft hover:bg-cream hover:text-ink transition-colors"
           >
             {item.label}

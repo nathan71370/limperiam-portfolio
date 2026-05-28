@@ -35,11 +35,7 @@ export function Hero() {
         <a className="btn primary" href="#work" data-magnetic>
           {hero.cta_primary}
         </a>
-        <a
-          className="btn ghost"
-          href={`mailto:${contactEmail}`}
-          data-magnetic
-        >
+        <a className="btn ghost" href={`mailto:${contactEmail}`} data-magnetic>
           {hero.cta_secondary}
         </a>
       </Reveal>

@@ -58,11 +58,7 @@ export async function Stack() {
     <>
       {flat.map((it, i) => (
         <span key={`m-${i}`} className="marquee-cell">
-          {i % 3 === 1 ? (
-            <span className="it">{it}</span>
-          ) : (
-            <span>{it}</span>
-          )}
+          {i % 3 === 1 ? <span className="it">{it}</span> : <span>{it}</span>}
           <span className="dot">·</span>
         </span>
       ))}

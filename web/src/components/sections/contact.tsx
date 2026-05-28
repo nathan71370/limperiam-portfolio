@@ -65,9 +65,7 @@ export function Contact() {
                 style={{ marginTop: 12 }}
                 data-magnetic
               >
-                {lang === "fr"
-                  ? "Réserver un créneau →"
-                  : "Book a slot →"}
+                {lang === "fr" ? "Réserver un créneau →" : "Book a slot →"}
               </a>
             </Reveal>
           )}

@@ -1,22 +1,31 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function useReveal(opts: IntersectionObserverInit = {}) {
   const ref = useRef<HTMLElement | null>(null);
   const [seen, setSeen] = useState(false);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useLayoutEffect(() => {
+  // Check if element is already visible on mount (before IO fires)
+  useEffect(() => {
     if (!ref.current) return;
-    if (typeof document !== "undefined" && document.visibilityState === "hidden") {
-      setSeen(true);
-      return;
-    }
-    const r = ref.current.getBoundingClientRect();
-    if (r.top < window.innerHeight * 0.95 && r.bottom > 0) {
-      setSeen(true);
-    }
+    const el = ref.current;
+    const checkNow = () => {
+      if (
+        typeof document !== "undefined" &&
+        document.visibilityState === "hidden"
+      ) {
+        setSeen(true);
+        return;
+      }
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.95 && r.bottom > 0) {
+        setSeen(true);
+      }
+    };
+    // Defer so setState is not synchronous in the effect body
+    const id = requestAnimationFrame(checkNow);
+    return () => cancelAnimationFrame(id);
   }, []);
 
   useEffect(() => {

@@ -128,9 +128,15 @@ export const FR: I18nDict = {
     sub: "Je réponds en moins de 24 h les jours ouvrés.",
     email: "nathanmercier@limperiam.com",
     links: [
-      { l: "LinkedIn", h: "https://www.linkedin.com/in/nathan-mercier-47280713a/" },
+      {
+        l: "LinkedIn",
+        h: "https://www.linkedin.com/in/nathan-mercier-47280713a/",
+      },
       { l: "GitHub", h: "https://github.com/nathan71370" },
-      { l: "Walky Doggy", h: "https://apps.apple.com/fr/app/walky-doggy/id6759481327?l=en-GB" },
+      {
+        l: "Walky Doggy",
+        h: "https://apps.apple.com/fr/app/walky-doggy/id6759481327?l=en-GB",
+      },
     ],
     copy_label: "Copier",
     copied_label: "Copié",
@@ -148,7 +154,10 @@ export const FR: I18nDict = {
       { l: "Activité", v: "Programmation informatique (62.01Z)" },
       { l: "Hébergement du site", v: "Statique — fichier autonome" },
     ],
-    link: { l: "Voir sur annuaire-entreprises.data.gouv.fr", h: "https://annuaire-entreprises.data.gouv.fr/entreprise/limperiam-980716781" },
+    link: {
+      l: "Voir sur annuaire-entreprises.data.gouv.fr",
+      h: "https://annuaire-entreprises.data.gouv.fr/entreprise/limperiam-980716781",
+    },
   },
   footer: {
     brand: "limperiam",
@@ -226,9 +235,15 @@ export const EN: I18nDict = {
     sub: "I reply within 24 h on business days.",
     email: "nathanmercier@limperiam.com",
     links: [
-      { l: "LinkedIn", h: "https://www.linkedin.com/in/nathan-mercier-47280713a/" },
+      {
+        l: "LinkedIn",
+        h: "https://www.linkedin.com/in/nathan-mercier-47280713a/",
+      },
       { l: "GitHub", h: "https://github.com/nathan71370" },
-      { l: "Walky Doggy", h: "https://apps.apple.com/fr/app/walky-doggy/id6759481327?l=en-GB" },
+      {
+        l: "Walky Doggy",
+        h: "https://apps.apple.com/fr/app/walky-doggy/id6759481327?l=en-GB",
+      },
     ],
     copy_label: "Copy",
     copied_label: "Copied",
@@ -246,7 +261,10 @@ export const EN: I18nDict = {
       { l: "Activity", v: "Computer programming (62.01Z)" },
       { l: "Hosting", v: "Static — self-contained file" },
     ],
-    link: { l: "View on annuaire-entreprises.data.gouv.fr", h: "https://annuaire-entreprises.data.gouv.fr/entreprise/limperiam-980716781" },
+    link: {
+      l: "View on annuaire-entreprises.data.gouv.fr",
+      h: "https://annuaire-entreprises.data.gouv.fr/entreprise/limperiam-980716781",
+    },
   },
   footer: {
     brand: "limperiam",
