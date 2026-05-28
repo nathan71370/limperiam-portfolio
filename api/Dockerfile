@@ -17,6 +17,7 @@ RUN uv sync --frozen --no-dev
 COPY src ./src
 COPY alembic.ini ./
 COPY alembic ./alembic
+COPY scripts ./scripts
 
 # Create data dir (will be overridden by volume in compose)
 RUN mkdir -p /data /data/uploads

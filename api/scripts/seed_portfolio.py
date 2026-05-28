@@ -145,6 +145,13 @@ def login(client: httpx.Client) -> None:
         json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD},
     )
     resp.raise_for_status()
+    # When the API runs with secure=True (non-debug), httpx won't send the
+    # Secure cookie over plain HTTP inside Docker. Extract the token from the
+    # Set-Cookie header and inject it directly so subsequent requests work.
+    set_cookie = resp.headers.get("set-cookie", "")
+    if set_cookie and "access_token=" in set_cookie:
+        token = set_cookie.split("access_token=")[1].split(";")[0]
+        client.cookies.set("access_token", token)
 
 
 def upsert_projects(client: httpx.Client) -> None:

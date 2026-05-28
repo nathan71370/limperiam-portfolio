@@ -9,9 +9,13 @@ export type Skill = components["schemas"]["SkillOut"];
 const REVALIDATE_SECONDS = 60; // ISR window
 
 export async function fetchProjects(): Promise<Project[]> {
-  return apiGet<Project[]>("/projects", {
-    next: { revalidate: REVALIDATE_SECONDS, tags: ["projects"] },
-  });
+  try {
+    return await apiGet<Project[]>("/projects", {
+      next: { revalidate: REVALIDATE_SECONDS, tags: ["projects"] },
+    });
+  } catch {
+    return [];
+  }
 }
 
 export async function fetchProjectBySlug(slug: string): Promise<Project | null> {
@@ -34,13 +38,21 @@ export async function fetchProjectBySlug(slug: string): Promise<Project | null> 
 }
 
 export async function fetchExperiences(): Promise<Experience[]> {
-  return apiGet<Experience[]>("/experiences", {
-    next: { revalidate: REVALIDATE_SECONDS, tags: ["experiences"] },
-  });
+  try {
+    return await apiGet<Experience[]>("/experiences", {
+      next: { revalidate: REVALIDATE_SECONDS, tags: ["experiences"] },
+    });
+  } catch {
+    return [];
+  }
 }
 
 export async function fetchSkills(): Promise<Skill[]> {
-  return apiGet<Skill[]>("/skills", {
-    next: { revalidate: REVALIDATE_SECONDS, tags: ["skills"] },
-  });
+  try {
+    return await apiGet<Skill[]>("/skills", {
+      next: { revalidate: REVALIDATE_SECONDS, tags: ["skills"] },
+    });
+  } catch {
+    return [];
+  }
 }

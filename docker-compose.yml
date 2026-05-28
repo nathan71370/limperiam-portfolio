@@ -11,5 +11,23 @@ services:
       - UPLOAD_DIR=/data/uploads
     volumes:
       - ./data:/data
+    networks: [internal]
+    # NOTE: no "ports:" — API is reachable only via the `web` service on the
+    # internal network. To smoke-test the API alone, run:
+    #   docker compose run --rm --service-ports api
+
+  web:
+    build: ./web
+    restart: unless-stopped
+    environment:
+      - API_URL=http://api:8000
+      - NODE_ENV=production
+    depends_on:
+      - api
     ports:
-      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:3000:3000"
+    networks: [internal]
+
+networks:
+  internal:
+    driver: bridge
