@@ -60,15 +60,13 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
               {headlinePost}
             </>
           ) : (
-            item.title
+            lang === "fr" ? item.title : (item.title_en ?? item.title)
           )}
         </h3>
         <p className="desc" style={{ margin: 0 }}>
-          {meta
-            ? lang === "fr"
-              ? meta.summary_fr
-              : meta.summary_en
-            : item.description}
+          {lang === "fr"
+            ? item.description
+            : (item.description_en ?? item.description)}
         </p>
         <div className="tags">
           {tags.map((tag) => (
