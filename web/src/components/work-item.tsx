@@ -21,6 +21,24 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
   const stats = meta?.stats ?? [];
   const tags: string[] = Array.isArray(item.tech_stack) ? item.tech_stack : [];
 
+  // Use editorial headline_pre/em/post when available (matches original artifact).
+  // Fall back to the DB title (no italic emphasis) for projects not in WORK_META.
+  const headlinePre = meta
+    ? lang === "fr"
+      ? meta.headline_pre_fr
+      : meta.headline_pre_en
+    : "";
+  const headlineEm = meta
+    ? lang === "fr"
+      ? meta.headline_em_fr
+      : meta.headline_em_en
+    : "";
+  const headlinePost = meta
+    ? lang === "fr"
+      ? (meta.headline_post_fr ?? "")
+      : (meta.headline_post_en ?? "")
+    : "";
+
   return (
     <article
       ref={ref as React.RefObject<HTMLElement>}
@@ -35,7 +53,15 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
       </div>
       <div className="body-col">
         <h3 className="ttl" style={{ margin: 0, fontWeight: 400 }}>
-          {item.title}
+          {meta ? (
+            <>
+              {headlinePre}
+              <span className="it">{headlineEm}</span>
+              {headlinePost}
+            </>
+          ) : (
+            item.title
+          )}
         </h3>
         <p className="desc" style={{ margin: 0 }}>
           {item.description}

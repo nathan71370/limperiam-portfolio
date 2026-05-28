@@ -11,9 +11,9 @@ export function About() {
   const a = t.about;
 
   return (
-    <section className="section" id="approach">
+    <section className="section section--alt" id="approach">
       <div className="shell">
-        <div className="about-head">
+        <div className="about-grid">
           <div>
             <Reveal>
               <span className="kicker">{a.kicker}</span>
