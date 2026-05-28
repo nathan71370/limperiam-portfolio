@@ -64,7 +64,11 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
           )}
         </h3>
         <p className="desc" style={{ margin: 0 }}>
-          {item.description}
+          {meta
+            ? lang === "fr"
+              ? meta.summary_fr
+              : meta.summary_en
+            : item.description}
         </p>
         <div className="tags">
           {tags.map((tag) => (
@@ -83,7 +87,7 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
         <div className="stats">
           {stats.map((s, i) => (
             <div className="stat" key={i}>
-              <div className="v">{s.v}</div>
+              <div className="v">{lang === "fr" ? s.v_fr : s.v_en}</div>
               <div className="l">{lang === "fr" ? s.l_fr : s.l_en}</div>
             </div>
           ))}
