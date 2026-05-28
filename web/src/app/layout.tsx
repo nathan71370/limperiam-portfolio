@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { getLang, getTheme } from "@/lib/prefs";
+import { LangThemeProvider } from "@/components/lang-theme-provider";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -15,14 +17,20 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://limperiam.com"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const lang = await getLang();
+  const theme = await getTheme();
   return (
-    <html lang="fr" className={inter.variable}>
-      <body>{children}</body>
+    <html lang={lang} data-theme={theme} className={inter.variable}>
+      <body>
+        <LangThemeProvider initialLang={lang} initialTheme={theme}>
+          {children}
+        </LangThemeProvider>
+      </body>
     </html>
   );
 }
