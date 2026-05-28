@@ -3,7 +3,7 @@
 Personal portfolio site by Nathan Mercier — fullstack rebuild.
 
 ## Stack
-- Frontend: Next.js 16 (App Router, TypeScript, Tailwind v4) — ✅ *Plans 2 & 3 complete*
+- Frontend: Next.js 16 (App Router, TypeScript, Tailwind v4) — ✅ *Plans 2 + 3 + 4 complete*
 - Backend: FastAPI (Python 3.12) — ✅ *Plan 1 complete*
 - DB: SQLite (volume-persisted)
 - Containerization: Docker + docker-compose
@@ -14,7 +14,7 @@ Personal portfolio site by Nathan Mercier — fullstack rebuild.
 - ✅ **Plan 1: Backend API** (`v0.1.0-api`) — 59 tests, all endpoints
 - ✅ **Plan 2: Frontend public site** (`v0.2.0-web`) — design fidelity, contact form
 - ✅ **Plan 3: Admin UI** (`v0.3.0-admin`) — full CMS, image upload, Cal.com link
-- ⏳ **Plan 4: Deployment + Cloudflared repoint**
+- ✅ **Plan 4: Visual fidelity rebuild** (`v0.4.0-fidelity`) — verbatim port of original CSS + components, FR/EN, dark mode, cursor, scroll progress, marquee
 
 ## Running the full stack
 
