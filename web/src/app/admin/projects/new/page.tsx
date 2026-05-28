@@ -29,27 +29,57 @@ export default function NewProjectPage() {
             pattern="[a-z0-9-]+"
             error={state.fieldErrors?.slug?.[0]}
           />
-          <Field
-            label="Titre"
-            name="title"
-            required
-            error={state.fieldErrors?.title?.[0]}
-          />
-          <FieldTextarea
-            label="Description courte"
-            name="description"
-            required
-            rows={3}
-            hint="Affichée sur la carte projet"
-            error={state.fieldErrors?.description?.[0]}
-          />
-          <FieldTextarea
-            label="Contenu (markdown)"
-            name="content"
-            rows={10}
-            hint="Optionnel — page détail si renseigné"
-            error={state.fieldErrors?.content?.[0]}
-          />
+
+          <div className="rounded-2xl border border-line bg-stage-2 p-6 space-y-4">
+            <p className="text-[11px] uppercase tracking-[1.5px] text-ink-mute">
+              🇫🇷 Français
+            </p>
+            <Field
+              label="Titre"
+              name="title"
+              required
+              error={state.fieldErrors?.title?.[0]}
+            />
+            <FieldTextarea
+              label="Description courte"
+              name="description"
+              required
+              rows={3}
+              hint="Affichée sur la carte projet"
+              error={state.fieldErrors?.description?.[0]}
+            />
+            <FieldTextarea
+              label="Contenu (markdown)"
+              name="content"
+              rows={8}
+              hint="Optionnel — page détail si renseigné"
+              error={state.fieldErrors?.content?.[0]}
+            />
+          </div>
+
+          <div className="rounded-2xl border border-line bg-stage-2 p-6 space-y-4">
+            <p className="text-[11px] uppercase tracking-[1.5px] text-ink-mute">
+              🇬🇧 English
+            </p>
+            <Field
+              label="Title"
+              name="title_en"
+              hint="Optionnel — version anglaise"
+              error={state.fieldErrors?.title_en?.[0]}
+            />
+            <FieldTextarea
+              label="Short description"
+              name="description_en"
+              rows={3}
+              error={state.fieldErrors?.description_en?.[0]}
+            />
+            <FieldTextarea
+              label="Content (markdown)"
+              name="content_en"
+              rows={8}
+              error={state.fieldErrors?.content_en?.[0]}
+            />
+          </div>
           <Field
             label="Tech stack (séparés par virgules)"
             name="tech_stack"

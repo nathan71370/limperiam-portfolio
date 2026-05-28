@@ -23,6 +23,9 @@ const ProjectInput = z.object({
   title: z.string().min(1, "Titre requis").max(200),
   description: z.string().min(1, "Description requise"),
   content: z.string().optional().nullable(),
+  title_en: z.string().max(200).optional().or(z.literal("")).nullable(),
+  description_en: z.string().optional().or(z.literal("")).nullable(),
+  content_en: z.string().optional().or(z.literal("")).nullable(),
   tech_stack: z.array(z.string()),
   repo_url: z.string().url().optional().or(z.literal("")).nullable(),
   live_url: z.string().url().optional().or(z.literal("")).nullable(),
@@ -37,6 +40,9 @@ function fromForm(formData: FormData) {
     title: String(formData.get("title") || ""),
     description: String(formData.get("description") || ""),
     content: (formData.get("content") as string) || null,
+    title_en: (formData.get("title_en") as string) || null,
+    description_en: (formData.get("description_en") as string) || null,
+    content_en: (formData.get("content_en") as string) || null,
     tech_stack: techRaw
       .split(",")
       .map((s) => s.trim())
