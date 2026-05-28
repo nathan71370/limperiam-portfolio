@@ -69,8 +69,7 @@ export async function loginAction(
     maxAge: 60 * 60 * 24, // 24h (match the API)
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  redirect("/admin" as any);
+  redirect("/admin");
 }
 
 export async function logoutAction(): Promise<void> {
@@ -91,6 +90,5 @@ export async function logoutAction(): Promise<void> {
   }
 
   store.delete(COOKIE_NAME);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  redirect("/admin/login" as any);
+  redirect("/admin/login");
 }
