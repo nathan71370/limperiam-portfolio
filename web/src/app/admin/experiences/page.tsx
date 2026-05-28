@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Topbar } from "@/components/admin/topbar";
 import { PrimaryButton } from "@/components/admin/primary-button";
 import { DataTable } from "@/components/admin/data-table";
@@ -28,9 +29,9 @@ export default async function AdminExperiencesPage() {
       <Topbar
         title="Expériences"
         actions={
-          <a href="/admin/experiences/new">
+          <Link href="/admin/experiences/new">
             <PrimaryButton type="button">+ Nouvelle expérience</PrimaryButton>
-          </a>
+          </Link>
         }
       />
       <main className="flex-1 px-6 md:px-10 py-10">
@@ -41,12 +42,12 @@ export default async function AdminExperiencesPage() {
             {
               header: "Entreprise",
               cell: (e) => (
-                <a
+                <Link
                   href={`/admin/experiences/${e.id}`}
                   className="text-ink hover:text-accent font-medium"
                 >
                   {e.company}
-                </a>
+                </Link>
               ),
             },
             {

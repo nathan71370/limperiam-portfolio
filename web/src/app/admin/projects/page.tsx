@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Topbar } from "@/components/admin/topbar";
 import { PrimaryButton } from "@/components/admin/primary-button";
 import { DataTable } from "@/components/admin/data-table";
@@ -15,9 +16,9 @@ export default async function AdminProjectsPage() {
       <Topbar
         title="Projets"
         actions={
-          <a href="/admin/projects/new">
+          <Link href="/admin/projects/new">
             <PrimaryButton type="button">+ Nouveau projet</PrimaryButton>
-          </a>
+          </Link>
         }
       />
       <main className="flex-1 px-6 md:px-10 py-10">
@@ -28,12 +29,12 @@ export default async function AdminProjectsPage() {
             {
               header: "Titre",
               cell: (p) => (
-                <a
+                <Link
                   href={`/admin/projects/${p.id}`}
                   className="text-ink hover:text-accent font-medium"
                 >
                   {p.title}
-                </a>
+                </Link>
               ),
             },
             {
@@ -59,7 +60,11 @@ export default async function AdminProjectsPage() {
             {
               header: "Ordre",
               align: "right",
-              cell: (p) => <span className="tabular-nums text-ink-soft">{p.display_order}</span>,
+              cell: (p) => (
+                <span className="tabular-nums text-ink-soft">
+                  {p.display_order}
+                </span>
+              ),
               width: "80px",
             },
             {

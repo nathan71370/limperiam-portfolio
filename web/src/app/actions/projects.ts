@@ -138,8 +138,10 @@ export async function uploadProjectImageAction(
   } catch (err) {
     if (err instanceof ApiError) {
       if (err.status === 401) redirect("/admin/login");
-      if (err.status === 413) return { status: "error", error: "Fichier trop volumineux (max 2 Mo)" };
-      if (err.status === 400) return { status: "error", error: "Format d'image invalide" };
+      if (err.status === 413)
+        return { status: "error", error: "Fichier trop volumineux (max 2 Mo)" };
+      if (err.status === 400)
+        return { status: "error", error: "Format d'image invalide" };
     }
     return { status: "error", error: "Échec de l'upload" };
   }

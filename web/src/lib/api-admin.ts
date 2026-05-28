@@ -24,7 +24,9 @@ async function buildHeaders(extra: HeadersInit = {}): Promise<Headers> {
 
 async function parse<T>(res: Response): Promise<T> {
   const ct = res.headers.get("content-type") || "";
-  const body = ct.includes("application/json") ? await res.json() : await res.text();
+  const body = ct.includes("application/json")
+    ? await res.json()
+    : await res.text();
   if (!res.ok) throw new ApiError(res.status, body);
   return body as T;
 }
@@ -58,7 +60,10 @@ export async function apiAdminPut<T>(path: string, body: unknown): Promise<T> {
   return parse<T>(res);
 }
 
-export async function apiAdminPatch<T>(path: string, body: unknown): Promise<T> {
+export async function apiAdminPatch<T>(
+  path: string,
+  body: unknown,
+): Promise<T> {
   const res = await fetch(url(path), {
     method: "PATCH",
     headers: await buildHeaders({ "Content-Type": "application/json" }),
@@ -76,7 +81,9 @@ export async function apiAdminDelete(path: string): Promise<void> {
   });
   if (!res.ok) {
     const ct = res.headers.get("content-type") || "";
-    const body = ct.includes("application/json") ? await res.json() : await res.text();
+    const body = ct.includes("application/json")
+      ? await res.json()
+      : await res.text();
     throw new ApiError(res.status, body);
   }
 }

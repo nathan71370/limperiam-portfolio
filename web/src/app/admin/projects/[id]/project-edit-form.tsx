@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { Field, FieldTextarea, FieldCheckbox } from "@/components/admin/field";
 import { PrimaryButton } from "@/components/admin/primary-button";
@@ -98,9 +99,9 @@ export function ProjectEditForm({ project }: { project: Project }) {
         <PrimaryButton type="submit" disabled={pending}>
           {pending ? "Sauvegarde…" : "Enregistrer"}
         </PrimaryButton>
-        <a href="/admin/projects">
+        <Link href="/admin/projects">
           <GhostButton type="button">Retour</GhostButton>
-        </a>
+        </Link>
       </div>
     </form>
   );

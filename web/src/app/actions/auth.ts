@@ -37,7 +37,10 @@ export async function loginAction(
   try {
     res = await fetch(`${API_BASE}/api/v1/auth/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       body: JSON.stringify(parsed.data),
       cache: "no-store",
     });
@@ -49,7 +52,10 @@ export async function loginAction(
     return { status: "error", error: "Identifiants invalides." };
   }
   if (res.status === 429) {
-    return { status: "error", error: "Trop de tentatives. Réessaie plus tard." };
+    return {
+      status: "error",
+      error: "Trop de tentatives. Réessaie plus tard.",
+    };
   }
   if (!res.ok) {
     return { status: "error", error: `Erreur ${res.status}` };

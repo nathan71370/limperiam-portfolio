@@ -1,18 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { Topbar } from "@/components/admin/topbar";
-import {
-  Field,
-  FieldSelect,
-  FieldCheckbox,
-} from "@/components/admin/field";
+import { Field, FieldSelect, FieldCheckbox } from "@/components/admin/field";
 import { PrimaryButton } from "@/components/admin/primary-button";
 import { GhostButton } from "@/components/admin/ghost-button";
-import {
-  createSkillAction,
-  type SkillFormState,
-} from "@/app/actions/skills";
+import { createSkillAction, type SkillFormState } from "@/app/actions/skills";
 
 const INITIAL: SkillFormState = { status: "idle" };
 
@@ -82,9 +76,9 @@ export default function NewSkillPage() {
             <PrimaryButton type="submit" disabled={pending}>
               {pending ? "Création…" : "Créer"}
             </PrimaryButton>
-            <a href="/admin/skills">
+            <Link href="/admin/skills">
               <GhostButton type="button">Annuler</GhostButton>
-            </a>
+            </Link>
           </div>
         </form>
       </main>

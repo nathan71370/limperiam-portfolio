@@ -81,7 +81,9 @@ export async function updateExperienceAction(
   }
 }
 
-export async function deleteExperienceAction(formData: FormData): Promise<void> {
+export async function deleteExperienceAction(
+  formData: FormData,
+): Promise<void> {
   const id = Number(formData.get("id"));
   if (!id) return;
   try {

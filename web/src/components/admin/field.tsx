@@ -97,7 +97,12 @@ type CheckboxProps = {
   hint?: string;
 };
 
-export function FieldCheckbox({ label, name, defaultChecked, hint }: CheckboxProps) {
+export function FieldCheckbox({
+  label,
+  name,
+  defaultChecked,
+  hint,
+}: CheckboxProps) {
   return (
     <label className="flex items-start gap-3 cursor-pointer">
       <input
@@ -108,7 +113,9 @@ export function FieldCheckbox({ label, name, defaultChecked, hint }: CheckboxPro
       />
       <span>
         <span className="block text-[14px] text-ink">{label}</span>
-        {hint && <span className="block text-[12px] text-ink-mute mt-0.5">{hint}</span>}
+        {hint && (
+          <span className="block text-[12px] text-ink-mute mt-0.5">{hint}</span>
+        )}
       </span>
     </label>
   );
@@ -149,7 +156,9 @@ export function FieldSelect({
           </option>
         ))}
       </select>
-      {hint && !error && <p className="mt-1 text-[11px] text-ink-mute">{hint}</p>}
+      {hint && !error && (
+        <p className="mt-1 text-[11px] text-ink-mute">{hint}</p>
+      )}
       {error && <p className="mt-1 text-[12px] text-accent">{error}</p>}
     </label>
   );

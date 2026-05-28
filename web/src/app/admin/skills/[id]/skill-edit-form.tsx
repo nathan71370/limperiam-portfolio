@@ -1,17 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
-import {
-  Field,
-  FieldSelect,
-  FieldCheckbox,
-} from "@/components/admin/field";
+import { Field, FieldSelect, FieldCheckbox } from "@/components/admin/field";
 import { PrimaryButton } from "@/components/admin/primary-button";
 import { GhostButton } from "@/components/admin/ghost-button";
-import {
-  updateSkillAction,
-  type SkillFormState,
-} from "@/app/actions/skills";
+import { updateSkillAction, type SkillFormState } from "@/app/actions/skills";
 import type { components } from "@/lib/api-types";
 
 type Skill = components["schemas"]["SkillOut"];
@@ -90,9 +84,9 @@ export function SkillEditForm({ skill }: { skill: Skill }) {
         <PrimaryButton type="submit" disabled={pending}>
           {pending ? "Sauvegarde…" : "Enregistrer"}
         </PrimaryButton>
-        <a href="/admin/skills">
+        <Link href="/admin/skills">
           <GhostButton type="button">Retour</GhostButton>
-        </a>
+        </Link>
       </div>
     </form>
   );

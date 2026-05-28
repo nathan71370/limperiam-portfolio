@@ -22,7 +22,9 @@ function fromForm(formData: FormData) {
   const levelRaw = formData.get("level") as string | null;
   return {
     name: String(formData.get("name") || ""),
-    category: String(formData.get("category") || "backend") as Skill["category"],
+    category: String(
+      formData.get("category") || "backend",
+    ) as Skill["category"],
     level: levelRaw && levelRaw.length > 0 ? Number(levelRaw) : null,
     icon: (formData.get("icon") as string) || null,
     display_order: Number(formData.get("display_order") || 0),

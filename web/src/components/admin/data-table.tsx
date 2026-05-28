@@ -35,7 +35,11 @@ export function DataTable<T extends { id: number | string }>({
                 style={c.width ? { width: c.width } : undefined}
                 className={cn(
                   "text-[11px] uppercase tracking-[1.5px] text-ink-mute px-4 py-3",
-                  c.align === "right" ? "text-right" : c.align === "center" ? "text-center" : "text-left",
+                  c.align === "right"
+                    ? "text-right"
+                    : c.align === "center"
+                      ? "text-center"
+                      : "text-left",
                 )}
               >
                 {c.header}
@@ -45,13 +49,20 @@ export function DataTable<T extends { id: number | string }>({
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.id} className="border-t border-line hover:bg-stage-2/50">
+            <tr
+              key={row.id}
+              className="border-t border-line hover:bg-stage-2/50"
+            >
               {columns.map((c, i) => (
                 <td
                   key={i}
                   className={cn(
                     "px-4 py-3 align-middle",
-                    c.align === "right" ? "text-right" : c.align === "center" ? "text-center" : "text-left",
+                    c.align === "right"
+                      ? "text-right"
+                      : c.align === "center"
+                        ? "text-center"
+                        : "text-left",
                   )}
                 >
                   {c.cell(row)}

@@ -1,9 +1,6 @@
 import { Topbar } from "@/components/admin/topbar";
 import { apiAdminGet } from "@/lib/api-admin";
-import {
-  deleteMessageAction,
-  toggleReadAction,
-} from "@/app/actions/messages";
+import { deleteMessageAction, toggleReadAction } from "@/app/actions/messages";
 import type { components } from "@/lib/api-types";
 
 type Message = components["schemas"]["ContactMessageOut"];

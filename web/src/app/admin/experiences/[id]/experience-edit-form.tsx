@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { Field, FieldTextarea } from "@/components/admin/field";
 import { PrimaryButton } from "@/components/admin/primary-button";
@@ -90,9 +91,9 @@ export function ExperienceEditForm({ experience }: { experience: Experience }) {
         <PrimaryButton type="submit" disabled={pending}>
           {pending ? "Sauvegarde…" : "Enregistrer"}
         </PrimaryButton>
-        <a href="/admin/experiences">
+        <Link href="/admin/experiences">
           <GhostButton type="button">Retour</GhostButton>
-        </a>
+        </Link>
       </div>
     </form>
   );

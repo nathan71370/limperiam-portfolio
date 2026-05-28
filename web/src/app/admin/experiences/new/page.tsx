@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { Topbar } from "@/components/admin/topbar";
 import { Field, FieldTextarea } from "@/components/admin/field";
@@ -78,9 +79,9 @@ export default function NewExperiencePage() {
             <PrimaryButton type="submit" disabled={pending}>
               {pending ? "Création…" : "Créer"}
             </PrimaryButton>
-            <a href="/admin/experiences">
+            <Link href="/admin/experiences">
               <GhostButton type="button">Annuler</GhostButton>
-            </a>
+            </Link>
           </div>
         </form>
       </main>
