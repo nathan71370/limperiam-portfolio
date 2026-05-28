@@ -34,20 +34,59 @@ export function ExperienceEditForm({ experience }: { experience: Experience }) {
         defaultValue={experience.company}
         error={state.fieldErrors?.company?.[0]}
       />
-      <Field
-        label="Rôle"
-        name="role"
-        required
-        defaultValue={experience.role}
-        error={state.fieldErrors?.role?.[0]}
-      />
-      <FieldTextarea
-        label="Description"
-        name="description"
-        rows={5}
-        defaultValue={experience.description}
-        error={state.fieldErrors?.description?.[0]}
-      />
+
+      <div className="rounded-2xl border border-line bg-stage-2 p-6 space-y-4">
+        <p className="text-[11px] uppercase tracking-[1.5px] text-ink-mute">
+          🇫🇷 Français
+        </p>
+        <Field
+          label="Rôle"
+          name="role"
+          required
+          defaultValue={experience.role}
+          error={state.fieldErrors?.role?.[0]}
+        />
+        <FieldTextarea
+          label="Description"
+          name="description"
+          rows={5}
+          defaultValue={experience.description}
+          error={state.fieldErrors?.description?.[0]}
+        />
+        <Field
+          label="Localisation"
+          name="location"
+          defaultValue={experience.location}
+          error={state.fieldErrors?.location?.[0]}
+        />
+      </div>
+
+      <div className="rounded-2xl border border-line bg-stage-2 p-6 space-y-4">
+        <p className="text-[11px] uppercase tracking-[1.5px] text-ink-mute">
+          🇬🇧 English
+        </p>
+        <Field
+          label="Role"
+          name="role_en"
+          defaultValue={experience.role_en}
+          hint="Optionnel — version anglaise"
+          error={state.fieldErrors?.role_en?.[0]}
+        />
+        <FieldTextarea
+          label="Description"
+          name="description_en"
+          rows={5}
+          defaultValue={experience.description_en}
+          error={state.fieldErrors?.description_en?.[0]}
+        />
+        <Field
+          label="Location"
+          name="location_en"
+          defaultValue={experience.location_en}
+          error={state.fieldErrors?.location_en?.[0]}
+        />
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field
           label="Date de début"
@@ -66,12 +105,6 @@ export function ExperienceEditForm({ experience }: { experience: Experience }) {
           error={state.fieldErrors?.end_date?.[0]}
         />
       </div>
-      <Field
-        label="Localisation"
-        name="location"
-        defaultValue={experience.location}
-        error={state.fieldErrors?.location?.[0]}
-      />
       <Field
         label="Ordre d'affichage"
         name="display_order"
