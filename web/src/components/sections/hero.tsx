@@ -1,59 +1,47 @@
-import { HERO } from "@/content/static";
+"use client";
+
+import { useLangTheme } from "@/components/lang-theme-provider";
+import { getDict } from "@/content/i18n";
 import { Reveal } from "@/components/reveal";
-import { StatusDot } from "@/components/status-dot";
-import { Kicker } from "@/components/kicker";
+import { WordReveal } from "@/components/word-reveal";
 
 export function Hero() {
+  const { lang } = useLangTheme();
+  const t = getDict(lang);
+  const hero = t.hero;
+  const contactEmail = t.contact.email;
+
   return (
-    <section
-      id="hero"
-      className="relative mx-auto max-w-[var(--max-w)] px-[var(--page-pad)] pt-16 pb-24 md:pt-24 md:pb-32"
-    >
-      <Reveal>
-        <Kicker>{HERO.kicker}</Kicker>
+    <section className="hero shell" id="top">
+      <Reveal className="hero-status">
+        <span className="pip" />
+        {hero.meta_left} · {hero.meta_right}
       </Reveal>
-
-      <Reveal delay={80} className="mt-6">
-        <h1
-          className="font-serif text-ink leading-[1.05] tracking-[-0.01em]"
-          style={{ fontSize: "clamp(44px, 8vw, 96px)" }}
-        >
-          {HERO.headlinePre}
-          <em className="text-accent not-italic font-serif italic">
-            {HERO.headlineEm}
-          </em>
-          {HERO.headlinePost}
-          <br />
-          {HERO.headlinePost2}
-        </h1>
+      <h1 className="hero-title">
+        <WordReveal text={hero.headline_pre} />
+        <span className="it">
+          <WordReveal text={hero.headline_em} baseDelay={3} />
+        </span>
+        <WordReveal text={hero.headline_post} baseDelay={5} />
+        <br />
+        <span className="it">
+          <WordReveal text={hero.headline_post2} baseDelay={7} />
+        </span>
+      </h1>
+      <Reveal delay={500} className="hero-sub">
+        <p>{hero.sub}</p>
       </Reveal>
-
-      <Reveal delay={160} className="mt-8 max-w-2xl">
-        <p className="text-[17px] text-ink-soft leading-[1.5]">{HERO.sub}</p>
-      </Reveal>
-
-      <Reveal delay={240} className="mt-10 flex flex-wrap items-center gap-4">
-        <a
-          href={HERO.ctaPrimary.href}
-          className="inline-flex items-center gap-2 rounded-full bg-ink text-cream px-6 py-3 text-[14px] font-medium hover:bg-accent-deep transition-colors"
-        >
-          {HERO.ctaPrimary.label}
+      <Reveal delay={650} className="hero-actions">
+        <a className="btn primary" href="#work" data-magnetic>
+          {hero.cta_primary}
         </a>
         <a
-          href={HERO.ctaSecondary.href}
-          className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-6 py-3 text-[14px] text-ink hover:border-ink transition-colors"
+          className="btn ghost"
+          href={`mailto:${contactEmail}`}
+          data-magnetic
         >
-          {HERO.ctaSecondary.label}
+          {hero.cta_secondary}
         </a>
-      </Reveal>
-
-      <Reveal
-        delay={320}
-        className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6 text-[11px] uppercase tracking-[1.5px] text-ink-mute"
-      >
-        <span>{HERO.metaLeft}</span>
-        <StatusDot label={HERO.statusLabel} />
-        <span>{HERO.metaRight}</span>
       </Reveal>
     </section>
   );
