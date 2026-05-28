@@ -1,25 +1,37 @@
-import { STACK_INTRO } from "@/content/static";
 import { fetchSkills, type Skill } from "@/lib/server-fetch";
+import { getLang } from "@/lib/prefs";
+import { getDict } from "@/content/i18n";
 import { Reveal } from "@/components/reveal";
-import { Kicker } from "@/components/kicker";
+import { WordReveal } from "@/components/word-reveal";
 
-const CATEGORY_LABEL: Record<Skill["category"], string> = {
+const CATEGORY_LABEL_FR: Record<Skill["category"], string> = {
   backend: "Backend",
   frontend: "Frontend",
+  tools: "Mobile",
   devops: "DevOps",
-  tools: "Outils",
   soft: "Pratique",
+};
+
+const CATEGORY_LABEL_EN: Record<Skill["category"], string> = {
+  backend: "Backend",
+  frontend: "Frontend",
+  tools: "Mobile",
+  devops: "DevOps",
+  soft: "Practice",
 };
 
 const CATEGORY_ORDER: Skill["category"][] = [
   "backend",
   "frontend",
-  "devops",
   "tools",
+  "devops",
   "soft",
 ];
 
-function groupSkills(skills: Skill[]) {
+function groupSkills(
+  skills: Skill[],
+  labels: Record<Skill["category"], string>,
+) {
   const groups = new Map<Skill["category"], Skill[]>();
   for (const cat of CATEGORY_ORDER) groups.set(cat, []);
   for (const s of skills) {
@@ -28,69 +40,73 @@ function groupSkills(skills: Skill[]) {
   }
   return CATEGORY_ORDER.map((cat) => ({
     category: cat,
-    label: CATEGORY_LABEL[cat],
+    label: labels[cat],
     items: groups.get(cat) ?? [],
   })).filter((g) => g.items.length > 0);
 }
 
 export async function Stack() {
   const skills = await fetchSkills();
-  const groups = groupSkills(skills);
+  const lang = await getLang();
+  const t = getDict(lang);
+  const s = t.stack;
+  const labels = lang === "fr" ? CATEGORY_LABEL_FR : CATEGORY_LABEL_EN;
+  const groups = groupSkills(skills, labels);
+  const flat = groups.flatMap((g) => g.items.map((it) => it.name));
+
+  const marqueeText = (
+    <>
+      {flat.map((it, i) => (
+        <span key={`m-${i}`} className="marquee-cell">
+          {i % 3 === 1 ? (
+            <span className="it">{it}</span>
+          ) : (
+            <span>{it}</span>
+          )}
+          <span className="dot">·</span>
+        </span>
+      ))}
+    </>
+  );
 
   return (
-    <section
-      id="stack"
-      className="bg-stage-2 border-y border-line py-24 md:py-32"
-    >
-      <div className="mx-auto max-w-[var(--max-w)] px-[var(--page-pad)]">
-        <Reveal>
-          <Kicker>{STACK_INTRO.kicker}</Kicker>
-        </Reveal>
-
-        <Reveal delay={80} className="mt-4 max-w-3xl">
-          <h2
-            className="font-serif text-ink leading-[1.1] tracking-[-0.01em]"
-            style={{ fontSize: "clamp(32px, 5vw, 56px)" }}
-          >
-            {STACK_INTRO.headlinePre}
-            <em className="text-accent not-italic font-serif italic">
-              {STACK_INTRO.headlineEm}
-            </em>
-          </h2>
-        </Reveal>
-
-        <Reveal delay={160} className="mt-6 max-w-3xl">
-          <p className="text-[16px] text-ink-soft leading-[1.6]">
-            {STACK_INTRO.sub}
-          </p>
-        </Reveal>
-
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {groups.length === 0 ? (
-            <p className="text-ink-mute text-[14px] col-span-full">
-              Stack à venir.
+    <section className="section section--alt" id="stack">
+      <div className="shell">
+        <div className="work-head">
+          <div>
+            <Reveal>
+              <span className="kicker">{s.kicker}</span>
+            </Reveal>
+            <h2 className="h2">
+              <WordReveal text={s.headline_pre} />
+              <span className="it">
+                <WordReveal text={s.headline_em} baseDelay={2} />
+              </span>
+            </h2>
+          </div>
+          <Reveal delay={200}>
+            <p className="sub" style={{ margin: 0 }}>
+              {s.sub}
             </p>
-          ) : (
-            groups.map((group, i) => (
-              <Reveal key={group.category} delay={i * 60}>
-                <div className="rounded-2xl bg-card border border-line p-6 shadow-card h-full">
-                  <h3 className="font-serif text-[20px] text-ink">
-                    {group.label}
-                  </h3>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {group.items.map((s) => (
-                      <li
-                        key={s.id}
-                        className="rounded-full bg-cream-deep px-3 py-1 text-[13px] text-ink-soft"
-                      >
-                        {s.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            ))
-          )}
+          </Reveal>
+        </div>
+        <div className="stack-grid">
+          {groups.map((g, i) => (
+            <Reveal key={g.category} delay={i * 100} className="stack-card">
+              <h3>{g.label}</h3>
+              <ul>
+                {g.items.map((it) => (
+                  <li key={it.id}>{it.name}</li>
+                ))}
+              </ul>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee-track">
+          {marqueeText}
+          {marqueeText}
         </div>
       </div>
     </section>
