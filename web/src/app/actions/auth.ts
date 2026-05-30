@@ -1,9 +1,26 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { COOKIE_NAME, extractAccessToken } from "@/lib/auth-cookie";
+
+/**
+ * Decide whether the auth cookie should carry the `Secure` flag.
+ * - HTTPS request (e.g. Cloudflare tunnel sets x-forwarded-proto=https) → true
+ * - HTTP request (local dev on http://localhost:3000) → false
+ *
+ * Override with COOKIE_SECURE=true or COOKIE_SECURE=false explicitly if needed.
+ */
+async function shouldSecureCookie(): Promise<boolean> {
+  if (process.env.COOKIE_SECURE === "true") return true;
+  if (process.env.COOKIE_SECURE === "false") return false;
+  const h = await headers();
+  const proto =
+    h.get("x-forwarded-proto") ??
+    (h.get("forwarded")?.match(/proto=(\w+)/i)?.[1] ?? "");
+  return proto.toLowerCase() === "https";
+}
 
 const LoginSchema = z.object({
   email: z.string().email("Email invalide"),
@@ -69,7 +86,7 @@ export async function loginAction(
   const store = await cookies();
   store.set(COOKIE_NAME, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: await shouldSecureCookie(),
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24, // 24h (match the API)
