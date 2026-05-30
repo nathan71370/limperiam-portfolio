@@ -43,7 +43,6 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
       ref={ref as unknown as React.RefObject<HTMLAnchorElement>}
       href={`/projects/${item.slug}` as `/projects/${string}`}
       className={`work-item r-up ${seen ? "is-in" : ""}`}
-      data-magnetic
     >
       <div className="num">{number}</div>
       <div className="meta-col">
