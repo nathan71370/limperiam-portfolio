@@ -32,10 +32,14 @@ data-dev/
 .DS_Store
 Thumbs.db
 
-# IDE
+# IDE / local tooling
 .vscode/
 .idea/
 *.swp
+.claude/
+
+# Original artifact (kept locally for reference, not tracked)
+Limperiam Portfolio.html
 
 # Misc
 *.log
