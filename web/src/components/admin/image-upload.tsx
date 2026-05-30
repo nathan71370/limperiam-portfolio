@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { uploadProjectImageAction } from "@/app/actions/projects";
 import { GhostButton } from "./ghost-button";
 
@@ -10,6 +10,7 @@ export function ImageUpload({ projectId }: { projectId: number }) {
     kind: "ok" | "error";
     text: string;
   } | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -37,18 +38,25 @@ export function ImageUpload({ projectId }: { projectId: number }) {
       <p className="text-[11px] uppercase tracking-[1.5px] text-ink-mute mb-2">
         Remplacer l&apos;image
       </p>
-      <label className="inline-block">
-        <input
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          onChange={onChange}
-          disabled={pending}
-          className="sr-only"
-        />
-        <GhostButton type="button" disabled={pending}>
-          {pending ? "Upload…" : "Choisir un fichier"}
-        </GhostButton>
-      </label>
+      {/*
+        Nesting a <button> inside a <label> captures the click and the file
+        picker never opens. Use a button + ref + .click() instead.
+      */}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+        onChange={onChange}
+        disabled={pending}
+        className="sr-only"
+      />
+      <GhostButton
+        type="button"
+        disabled={pending}
+        onClick={() => inputRef.current?.click()}
+      >
+        {pending ? "Upload…" : "Choisir un fichier"}
+      </GhostButton>
       <p className="mt-2 text-[11px] text-ink-mute">
         PNG / JPEG / WebP — 2 Mo max
       </p>

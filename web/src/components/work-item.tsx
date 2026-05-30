@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import { useReveal } from "./reveal";
 import { useLangTheme } from "./lang-theme-provider";
 import { WORK_META } from "@/content/work-meta";
@@ -11,7 +11,6 @@ type Project = components["schemas"]["ProjectOut"];
 export function WorkItem({ item, idx }: { item: Project; idx: number }) {
   const { lang } = useLangTheme();
   const [ref, seen] = useReveal();
-  const [open, setOpen] = useState(false);
 
   const meta = WORK_META[item.slug];
   const number = meta?.n ?? String(idx + 1).padStart(2, "0");
@@ -40,10 +39,11 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
     : "";
 
   return (
-    <article
-      ref={ref as React.RefObject<HTMLElement>}
-      className={`work-item r-up ${seen ? "is-in" : ""} ${open ? "is-open" : ""}`}
-      onClick={() => setOpen((v) => !v)}
+    <Link
+      ref={ref as unknown as React.RefObject<HTMLAnchorElement>}
+      href={`/projects/${item.slug}` as `/projects/${string}`}
+      className={`work-item r-up ${seen ? "is-in" : ""}`}
+      data-magnetic
     >
       <div className="num">{number}</div>
       <div className="meta-col">
@@ -59,8 +59,10 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
               <span className="it">{headlineEm}</span>
               {headlinePost}
             </>
+          ) : lang === "fr" ? (
+            item.title
           ) : (
-            lang === "fr" ? item.title : (item.title_en ?? item.title)
+            (item.title_en ?? item.title)
           )}
         </h3>
         <p className="desc" style={{ margin: 0 }}>
@@ -91,6 +93,6 @@ export function WorkItem({ item, idx }: { item: Project; idx: number }) {
           ))}
         </div>
       )}
-    </article>
+    </Link>
   );
 }
