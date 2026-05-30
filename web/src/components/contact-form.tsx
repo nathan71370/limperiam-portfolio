@@ -2,10 +2,14 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import { submitContact, type ContactState } from "@/app/actions/contact";
+import { useLangTheme } from "@/components/lang-theme-provider";
+import { getDict } from "@/content/i18n";
 
 const INITIAL: ContactState = { status: "idle" };
 
 export function ContactForm() {
+  const { lang } = useLangTheme();
+  const f = getDict(lang).contact.form;
   const [state, formAction, pending] = useActionState(submitContact, INITIAL);
   const mountedAt = useRef<number>(0);
   const elapsedInputRef = useRef<HTMLInputElement | null>(null);
@@ -42,7 +46,7 @@ export function ContactForm() {
     >
       <label className="block">
         <span className="text-[12px] uppercase tracking-[1.5px] text-ink-mute">
-          Nom
+          {f.name_label}
         </span>
         <input
           name="name"
@@ -58,7 +62,7 @@ export function ContactForm() {
 
       <label className="block">
         <span className="text-[12px] uppercase tracking-[1.5px] text-ink-mute">
-          Email
+          {f.email_label}
         </span>
         <input
           name="email"
@@ -75,7 +79,7 @@ export function ContactForm() {
 
       <label className="block md:col-span-2">
         <span className="text-[12px] uppercase tracking-[1.5px] text-ink-mute">
-          Sujet (optionnel)
+          {f.subject_label}
         </span>
         <input
           name="subject"
@@ -85,7 +89,7 @@ export function ContactForm() {
 
       <label className="block md:col-span-2">
         <span className="text-[12px] uppercase tracking-[1.5px] text-ink-mute">
-          Message
+          {f.message_label}
         </span>
         <textarea
           name="message"
@@ -136,10 +140,10 @@ export function ContactForm() {
           disabled={pending}
           className="inline-flex items-center gap-2 rounded-full bg-ink text-cream px-6 py-3 text-[14px] font-medium hover:bg-accent-deep transition-colors disabled:opacity-60"
         >
-          {pending ? "Envoi…" : "Envoyer"}
+          {pending ? f.submitting : f.submit}
         </button>
         {state.status === "ok" && (
-          <span className="text-[13px] text-sage">Message envoyé. Merci.</span>
+          <span className="text-[13px] text-sage">{f.success}</span>
         )}
         {state.status === "error" && state.error && (
           <span className="text-[13px] text-accent">{state.error}</span>

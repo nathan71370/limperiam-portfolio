@@ -47,6 +47,16 @@ export type I18nDict = {
     links: Array<{ l: string; h: string }>;
     copy_label: string;
     copied_label: string;
+    form: {
+      name_label: string;
+      email_label: string;
+      subject_label: string;
+      message_label: string;
+      submit: string;
+      submitting: string;
+      success: string;
+      cal_cta: string;
+    };
   };
   legal: {
     kicker: string;
@@ -140,6 +150,16 @@ export const FR: I18nDict = {
     ],
     copy_label: "Copier",
     copied_label: "Copié",
+    form: {
+      name_label: "Nom",
+      email_label: "Email",
+      subject_label: "Sujet (optionnel)",
+      message_label: "Message",
+      submit: "Envoyer",
+      submitting: "Envoi…",
+      success: "Message envoyé. Merci.",
+      cal_cta: "Réserver un créneau →",
+    },
   },
   legal: {
     kicker: "MENTIONS LÉGALES",
@@ -247,6 +267,16 @@ export const EN: I18nDict = {
     ],
     copy_label: "Copy",
     copied_label: "Copied",
+    form: {
+      name_label: "Name",
+      email_label: "Email",
+      subject_label: "Subject (optional)",
+      message_label: "Message",
+      submit: "Send",
+      submitting: "Sending…",
+      success: "Message sent. Thanks.",
+      cal_cta: "Book a slot →",
+    },
   },
   legal: {
     kicker: "LEGAL",
