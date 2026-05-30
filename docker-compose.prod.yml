@@ -1,0 +1,53 @@
+services:
+  api:
+    image: ghcr.io/nathan71370/limperiam-portfolio-api:latest
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=sqlite:////data/sqlite.db
+      - JWT_SECRET=${JWT_SECRET}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - DEBUG=false
+      - UPLOAD_DIR=/data/uploads
+    volumes:
+      - ./data:/data
+    networks: [internal]
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  web:
+    image: ghcr.io/nathan71370/limperiam-portfolio-web:latest
+    restart: unless-stopped
+    environment:
+      - API_URL=http://api:8000
+      - NODE_ENV=production
+      - NEXT_PUBLIC_CALCOM_LINK=${NEXT_PUBLIC_CALCOM_LINK:-}
+      # COOKIE_SECURE not set → auto-detected from x-forwarded-proto
+      # (Cloudflared sets x-forwarded-proto=https, so cookies will be Secure)
+    depends_on:
+      - api
+    ports:
+      - "127.0.0.1:3000:3000" # only loopback — Cloudflared tunnel binds to this
+    networks: [internal]
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  # Watchtower polls GHCR every 5 min for new :latest images of the two services
+  # above (matched by the `enable=true` label) and recreates them transparently.
+  # Images are public on GHCR by default — no auth needed.
+  watchtower:
+    image: containrrr/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - --label-enable
+      - --interval
+      - "300" # 5 minutes
+      - --cleanup
+      - --rolling-restart
+    networks: [internal]
+
+networks:
+  internal:
+    driver: bridge
