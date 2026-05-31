@@ -58,24 +58,28 @@ gh api -X PATCH /user/packages/container/limperiam-portfolio-web/visibility -f v
 
 SSH into your home server, then:
 
-### 2.1 Clone the repo
+### 2.1 Create the deploy directory + grab the 2 config files
+
+You don't need to clone the repo on the server — the Docker images already contain all the source code (migrations, seed scripts, everything). You only need two files: `docker-compose.prod.yml` (references the GHCR images) and `.env` (your secrets).
 
 ```bash
-cd ~
-git clone https://github.com/nathan71370/limperiam-portfolio.git
-cd limperiam-portfolio
+mkdir -p ~/limperiam-portfolio && cd ~/limperiam-portfolio
+
+# Download the compose file and the env template directly from GitHub
+curl -fLO https://raw.githubusercontent.com/nathan71370/limperiam-portfolio/main/docker-compose.prod.yml
+curl -fLO https://raw.githubusercontent.com/nathan71370/limperiam-portfolio/main/.env.production.example
+mv .env.production.example .env
 ```
 
-(Use HTTPS — no SSH key needed since you'll just be pulling production config, not pushing.)
+(If the repo is **private**, replace `curl -fLO` with `gh api repos/nathan71370/limperiam-portfolio/contents/docker-compose.prod.yml --jq .content | base64 -d > docker-compose.prod.yml` — needs `gh` authenticated on the server.)
 
-### 2.2 Create the production `.env`
+### 2.2 Set the secrets
 
 ```bash
-cp .env.production.example .env
 nano .env
-# Set JWT_SECRET (use: openssl rand -hex 32)
-# Set ADMIN_EMAIL (your real email)
-# Set ADMIN_PASSWORD (a long password — you'll use this to log into /admin)
+# Set JWT_SECRET (generate with: openssl rand -hex 32)
+# Set ADMIN_EMAIL (your real email — used to log into /admin)
+# Set ADMIN_PASSWORD (a long password)
 ```
 
 ### 2.3 First boot
@@ -206,10 +210,21 @@ This runs at 3am daily, keeps 30 days of backups.
 ```bash
 # On the server:
 cd ~/limperiam-portfolio
-git pull   # to refresh docker-compose.prod.yml if it changed
 docker compose -f docker-compose.prod.yml pull
 docker compose -f docker-compose.prod.yml up -d
 ```
+
+### Updating `docker-compose.prod.yml` itself
+
+If you change the compose file on the dev side (new service, new env var, etc.), you need to re-fetch it on the server — there's no automatic sync since the server has no git clone:
+
+```bash
+cd ~/limperiam-portfolio
+curl -fLO https://raw.githubusercontent.com/nathan71370/limperiam-portfolio/main/docker-compose.prod.yml
+docker compose -f docker-compose.prod.yml up -d
+```
+
+Or wrap it in a one-liner `update-compose.sh` for convenience.
 
 ### Apply new DB migrations (after a code change adding a column)
 
