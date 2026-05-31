@@ -27,7 +27,11 @@ services:
     depends_on:
       - api
     ports:
-      - "127.0.0.1:3000:3000" # only loopback — Cloudflared tunnel binds to this
+      # Loopback only — Cloudflared (or any reverse proxy) targets this.
+      # Host port defaults to 3000; override via WEB_PORT in .env to match
+      # an existing tunnel config (e.g. WEB_PORT=1234 if you're swapping a
+      # previous container that used that port).
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
     networks: [internal]
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
