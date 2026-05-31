@@ -27,11 +27,16 @@ services:
     depends_on:
       - api
     ports:
-      # Loopback only — Cloudflared (or any reverse proxy) targets this.
-      # Host port defaults to 3000; override via WEB_PORT in .env to match
-      # an existing tunnel config (e.g. WEB_PORT=1234 if you're swapping a
-      # previous container that used that port).
-      - "127.0.0.1:${WEB_PORT:-3000}:3000"
+      # Bound on all interfaces so a Cloudflared (or other reverse-proxy)
+      # container in a separate network namespace can reach it via the host's
+      # LAN IP. On a home server behind a router this is fine — the LAN side
+      # is firewalled and the public path goes through Cloudflare's tunnel.
+      # Override host port via WEB_PORT in .env to keep your existing tunnel
+      # config (e.g. WEB_PORT=1234 to swap a previous container).
+      # If you need stricter isolation, swap "${WEB_PORT:-3000}:3000" for
+      # "127.0.0.1:${WEB_PORT:-3000}:3000" AND put cloudflared on the
+      # `internal` network defined below.
+      - "${WEB_PORT:-3000}:3000"
     networks: [internal]
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
