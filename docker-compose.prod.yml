@@ -12,8 +12,6 @@ services:
     volumes:
       - ./data:/data
     networks: [internal]
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
 
   web:
     image: ghcr.io/nathan71370/limperiam-portfolio-web:latest
@@ -22,41 +20,21 @@ services:
       - API_URL=http://api:8000
       - NODE_ENV=production
       - NEXT_PUBLIC_CALCOM_LINK=${NEXT_PUBLIC_CALCOM_LINK:-}
-      # COOKIE_SECURE not set → auto-detected from x-forwarded-proto
-      # (Cloudflared sets x-forwarded-proto=https, so cookies will be Secure)
     depends_on:
       - api
     ports:
-      # Bound on all interfaces so a Cloudflared (or other reverse-proxy)
-      # container in a separate network namespace can reach it via the host's
-      # LAN IP. On a home server behind a router this is fine — the LAN side
-      # is firewalled and the public path goes through Cloudflare's tunnel.
-      # Override host port via WEB_PORT in .env to keep your existing tunnel
-      # config (e.g. WEB_PORT=1234 to swap a previous container).
-      # If you need stricter isolation, swap "${WEB_PORT:-3000}:3000" for
-      # "127.0.0.1:${WEB_PORT:-3000}:3000" AND put cloudflared on the
-      # `internal` network defined below.
       - "${WEB_PORT:-3000}:3000"
-    networks: [internal]
+    networks: [internal, traefik]
     labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-
-  # Watchtower polls GHCR every 5 min for new :latest images of the two services
-  # above (matched by the `enable=true` label) and recreates them transparently.
-  # Images are public on GHCR by default — no auth needed.
-  watchtower:
-    image: containrrr/watchtower:latest
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command:
-      - --label-enable
-      - --interval
-      - "300" # 5 minutes
-      - --cleanup
-      - --rolling-restart
-    networks: [internal]
+      - "traefik.enable=true"
+      - "traefik.http.routers.limperiam.rule=Host(`limperiam.com`)"
+      - "traefik.http.routers.limperiam.entrypoints=websecure"
+      - "traefik.http.routers.limperiam.tls.certresolver=cloudflare"
+      - "traefik.http.services.limperiam.loadbalancer.server.port=3000"
 
 networks:
   internal:
     driver: bridge
+  traefik:
+    external: true
+    name: traefik
