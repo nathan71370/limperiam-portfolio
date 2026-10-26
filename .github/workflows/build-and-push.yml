@@ -62,7 +62,8 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
       - name: Fail fast if not connected to the tailnet
-        run: tailscale status --json | grep -q '"BackendState": *"Running"'
+        run: |
+          tailscale status --json | grep -q '"BackendState": *"Running"'
       - name: Trigger Komodo stack deploy
         env:
           SECRET: ${{ secrets.KOMODO_WEBHOOK_SECRET }}
