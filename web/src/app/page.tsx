@@ -10,6 +10,8 @@ import { Contact } from "@/components/sections/contact";
 import { Legal } from "@/components/sections/legal";
 import { Footer } from "@/components/sections/footer";
 
+export const metadata = { alternates: { canonical: "/" } };
+
 export default function HomePage() {
   return (
     <>

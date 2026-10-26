@@ -14,7 +14,8 @@ type Params = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Params) {
   const { slug } = await params;
   const project = await fetchProjectBySlug(slug);
-  if (!project) return { title: "Projet introuvable" };
+  if (!project)
+    return { title: "Projet introuvable", robots: { index: false } };
   const lang = await getLang();
   const title =
     lang === "en" ? (project.title_en ?? project.title) : project.title;
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: Params) {
   return {
     title: `${title} — limperiam`,
     description,
+    alternates: { canonical: `/projects/${slug}` },
   };
 }
 
