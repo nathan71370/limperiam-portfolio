@@ -54,7 +54,15 @@ jobs:
       - name: Connect to tailnet
         uses: tailscale/github-action@v3
         with:
-          authkey: ${{ secrets.TS_AUTHKEY }}
+          # Client OAuth (sans expiration) plutôt qu'une auth key : l'ancienne clé
+          # avait expiré et l'action ne fait pas échouer le job quand `tailscale up`
+          # échoue, d'où des timeouts vers Komodo. Le client doit avoir le scope
+          # "auth_keys" en écriture et le tag ci-dessous.
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+      - name: Fail fast if not connected to the tailnet
+        run: tailscale status --json | grep -q '"BackendState": *"Running"'
       - name: Trigger Komodo stack deploy
         env:
           SECRET: ${{ secrets.KOMODO_WEBHOOK_SECRET }}
